@@ -1,0 +1,91 @@
+/************************** content sections **********************/
+
+#sort{
+	font-family: verdana;
+	text-align: center;
+	margin-bottom:10px;
+}
+
+/************************ HIDING STUFF ***********************/
+
+.hidden{
+	display: none;
+}
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	/*color: #0000EE;*/
+	text-decoration: none;
+	display: block;
+}
+
+table a:hover, table a:focus{
+	background: white;
+	color: #2D6400;
+}
+
+#sort a{
+	display: inline;
+}
+
+#sort a:hover, #sort a:focus{
+	color: black;
+}
+
+/************************** tables ****************************/
+
+table#calls{
+  width:760px;
+	border-collapse:collapse;
+}
+
+tr{
+	padding: 25px;	
+	font-weight: bold;
+}
+
+td{
+	/*border: 2px solid #2D6400;*/
+	text-align: left;
+	border-bottom: 25px solid #8BDD3A;
+}
+
+.one{
+	width: 120px;
+	/*background: #6BCC0C;*/
+	background: #4BB400;
+	/*color: #2D6400;*/
+	padding: 4px;
+	padding-left: 10px;
+}
+
+.two{
+	width: auto;
+	/*background: #6BCC0C;*/
+	/*color: #2D6400;*/
+	background: #4BB400;
+	color: black;
+	padding: 4px;
+}
+
+.three{
+	width: 150px;
+	background: white;
+	font-family: "BitDust Two", "Dungeon", sans-serif;
+	color: red;
+	font-size: 20px;
+	padding: 0px;
+	font-weight: normal;
+}
+
+.four{
+	width: 15px;	
+	background: white;
+	padding-right: 4px;
+}
+
+.four img{
+  border:0;
+}

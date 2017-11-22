@@ -1,0 +1,126 @@
+/**************************** page content ***************************/
+
+#infocontainer{
+	max-width: 720px;
+	/* http://www.svendtofte.com/code/max_width_in_ie/ */
+	width: expression(document.body.clientWidth > 720? "720px": "auto");
+	margin: 0px auto;
+	padding: 20px 0px;
+	text-align: left;
+}	
+
+.chart, .chartR{
+	width: 50%;
+	height: 135px;
+	float: left;
+	text-align: right;
+	clear: none;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+.chartR{
+	text-align: left;
+}
+
+.chart img, .chartR img{
+	border: 0px;
+}
+
+.hidden{
+	display: none;
+}
+
+
+
+
+
+/**************************** div font styles ***************************/
+
+h1{
+	background: white;
+	text-align: center;
+	color: red;
+	font-size: 36px;
+	padding: 0px;
+}
+
+
+
+
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	text-decoration: none;
+	display: block;
+	border: none;
+}
+
+a:hover{
+	background: white;
+	color: #2D6400;
+	display: block;
+}
+
+
+
+
+/*********************** tables ******************************/
+
+#sales, #information, #repair, #cservice{
+	text-align: center;
+}
+
+table{
+	margin: auto;
+	cell-spacing: 0px;
+	width: 80%;
+	border-collapse: collapse;
+	border: 1px solid white;
+}
+
+.nameinfo{
+	border: none;
+}
+
+.topline td{
+	font-weight: bold;
+	background: white;
+	text-align: center;
+}
+
+.odd{
+	/*background: white;*/
+	background: #6BCC0C;
+}
+
+.first{
+	color: white;
+	font-weight: bold;
+	text-align: left;
+	padding-right: 8px;
+}
+
+.num{
+	text-align: center;
+}
+
+.name{
+	clear: both;
+	margin-left: 40px;
+	width: 670px;
+	background: white;
+	padding: 5px;
+	font-weight: bold;
+}
+
+td{
+	/*border: 1px solid black;*/
+	margin: 0px;
+	text-align: left;
+	padding: 4px;
+	cell-spacing: 0px;
+}

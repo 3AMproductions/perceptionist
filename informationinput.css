@@ -1,0 +1,121 @@
+/**************************** page content ***************************/
+
+#infocontainer{
+	max-width: 720px;
+	/* http://www.svendtofte.com/code/max_width_in_ie/ */
+	width: expression(document.body.clientWidth > 720? "720px": "auto");
+	margin: 0px auto;
+	padding: 20px 0px;
+	text-align: left;
+	clear:both;
+}	
+
+input.text,select{
+	background: #2D6400;
+	border: 2px inset white;
+	color: white;
+}
+
+select{
+	margin-left:10px;
+	width: auto;
+}
+
+#first,#last{
+	width:110px;
+	margin:0 10px;
+}
+
+#lblfirst,#lbllast{
+	font-size:10px;
+	margin:0;
+	padding:0;
+}
+
+#lblfirst{
+	margin:0 115px 0 47px;
+}
+
+#other{
+	margin:0 0 0 5px;
+}
+
+fieldset{
+	margin:20px 0;
+	padding:10px;
+	border:3px double #2D6400;
+}
+
+fieldset legend{
+	color: black;
+}
+
+input.text:focus,select:focus,#question textarea:focus,#submit input:focus{
+	background: transparent;
+	border: 2px inset white;
+	color: black;
+}
+
+fieldset#submit{
+	border:0;
+	text-align:right;
+}
+
+#submit input{
+	background: #2D6400;
+	border: 2px outset white;
+	color: white;
+}
+
+#submit input:active{
+	border-style:inset;
+}
+
+#customer{
+	width: 315px;
+	float: left;
+	clear: none;
+	text-align: left;
+}
+
+#information{
+	width: 315px;
+	float: right;
+	clear: none;
+	text-align: left;
+}
+
+#question{
+	clear: both;
+	text-align:left;
+	margin:0;
+	padding: 10px;
+}
+
+#question textarea{
+	display: block;
+	border: 2px inset white;
+	margin: 10px 0 0 0;
+	padding: 0; 
+	background: #2D6400;
+	color: white;
+	width:690px;
+	height: 175px;
+	overflow: auto;
+}
+
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	/*color: #0000EE;*/
+	text-decoration: none;
+	display: block;
+}
+
+a:hover, a:active, a:focus{
+	background: white;
+	color: #2D6400;
+}
+

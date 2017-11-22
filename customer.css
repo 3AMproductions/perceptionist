@@ -1,0 +1,228 @@
+/**************************** page content ***************************/
+
+#infocontainer{
+	width: 720px;
+	/* http://www.svendtofte.com/code/max_width_in_ie/ 
+	width: expression(document.body.clientWidth > 720? "720px": "auto");*/
+	margin: 0px auto;
+	padding: 20px 0px;
+	text-align: left;
+	
+	/*Special For John Doe Page*/
+	font-size: 14px;
+}	
+
+h3{
+	float: left;
+  margin:0;
+}
+
+address{
+	float: right;
+	margin:0 0 30px 0;
+	text-align: right;
+}
+
+h3,address{
+	width: 50%;
+	clear: none;
+	padding: 0;
+	display:inline;
+}
+
+address#phone{
+  margin:0;
+}
+
+#request{
+	clear: both;
+}
+
+h4{
+	margin:0;
+	padding:0 5px;
+	clear: both;
+	width: 70px;
+	border: 2px solid white;
+	border-bottom: 0;
+	margin-top:30px;
+	background: #2D6400;
+}
+
+#bio{
+	clear: both;
+	margin: 0; 
+	border: 2px solid white;
+	padding: 15px; 
+	background: #2D6400;
+	color: white;
+}
+
+dl{
+	clear: both;
+	margin:0;
+	padding:0;
+}
+
+dt{
+	margin:5px 0;
+}
+
+/************************** tables ****************************/
+
+#tablewrapper{
+	clear:both;
+}
+
+table#calls{
+  margin-top:30px;
+  width:720px;
+	border-collapse:collapse;
+}
+
+tr{
+	padding: 25px;	
+}
+
+th{
+  background: transparent;
+	font-weight:bold;
+	color: red;
+	border-bottom: 25px solid #8BDD3A;
+	text-align:right;
+	font-size:16px;
+}
+
+td{
+	/*border: 2px solid #2D6400;*/
+	text-align: left;
+	border-bottom: 25px solid #8BDD3A;
+}
+
+.one{
+	/*width: 120px;*/
+	/*background: #6BCC0C;*/
+	background: #4BB400;
+	/*color: #2D6400;*/
+	padding: 4px;
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+.two{
+	width: auto;
+	/*background: #6BCC0C;*/
+	/*color: #2D6400;*/
+	background: #4BB400;
+	color: black;
+	padding: 4px;
+}
+
+.three{
+	width: 150px;
+	background: white;
+	font-family: "BitDust Two", "Dungeon", sans-serif;
+	color: red;
+	font-size: 20px;
+	padding: 0px;
+	font-weight: normal;
+	font-weight: bold;
+}
+
+.four{
+	width: 15px;	
+	background: white;
+	padding-right: 4px;
+}
+
+.four img{
+  border:0;
+}
+
+/**************************** font styles ***************************/
+
+dt{
+	font-family: "Trebuchet MS", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #2D6400;
+	text-decoration: underline;
+}
+
+#bio dt{
+  color: white;
+}
+
+
+
+h3{
+	font-family: "Century Gothic", "Trebuchet MS", sans-serif;
+	font-size: 42px;
+	color: #2D6400;
+	font-weight:normal;
+}
+
+#time{
+	background: white;
+	/*font-family: "BitDust Two";*/
+	font-family: "Dungeon", "BitDust Two", sans-serif;
+	text-align: center;
+	color: red;
+	font-size: 36px;
+	padding: 0px;
+}
+
+address{
+	font-family: "Century Gothic", "Trebuchet MS", sans-serif;
+	font-style:normal;
+}
+	
+
+#phone{
+	font-family: "Century Gothic", "Trebuchet MS", sans-serif;
+	font-size: 42px;
+	text-align: right;
+	color: #2D6400;
+}
+
+#request, #bio{
+	font-weight: normal;
+	font-family: "Verdana", sans-serif;
+}
+
+h4{
+	color: white;
+}
+
+
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+a:hover{
+	background: white;
+	color: #2D6400;
+}
+
+#infocontainer a{
+	display: inline;
+}
+
+#resolve_call{
+  float: right;
+	background:none;
+	border:0;
+	padding:0;
+	margin:0 25px 0 0;
+}
+
+#resolve_call img{
+  border:0;
+	margin:0;
+	padding:0;
+}

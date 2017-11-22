@@ -1,0 +1,103 @@
+/**************************** page content ***************************/
+
+#infocontainer{
+	max-width: 720px;
+	/* http://www.svendtofte.com/code/max_width_in_ie/ */
+	width: expression(document.body.clientWidth > 720? "720px": "auto");
+	margin: 0px auto;
+	padding: 20px 0px;
+	text-align: left;
+	
+	/*Special For John Doe Page*/
+	font-size: 14px;
+	clear:both;
+}	
+
+
+/**************************** div font styles ***************************/
+
+
+fieldset{
+	margin:20px 0;
+	border:3px double #2D6400;
+}
+
+fieldset legend{
+	color: black;
+}
+
+fieldset#submit{
+	border:0;
+	text-align:right;
+}
+
+input,textarea{
+	background: #2D6400;
+	border: 2px inset white;
+	color: white;
+}
+
+input.text:focus,select:focus,#bio textarea:focus,#submit input:focus{
+	background: transparent;
+	border: 2px inset white;
+	color: black;
+}
+
+#submit input{
+	background: #2D6400;
+	border: 2px outset white;
+	color: white;
+}
+
+#submit input:active{
+	border-style:inset;
+}
+
+label{
+	font-size:10px;
+	width:75px;
+}
+
+.row {
+  margin:10px 0 0 10px;
+}
+
+.lblrow{
+  margin:0 0 10px 10px;
+}
+
+#fname,#mname,#lname,#phone,#nickname,#birthday {width:150px;}
+#street {width:250px;}
+#city {width:150px;}
+#state {width:35px;}
+#zip {width:50px;}
+
+#lblfname {margin-left:0;}
+#lblmname {margin-left:130px;}
+#lbllname {margin-left:115px;}
+#lblstreet {margin-left:0;}
+#lblcity {margin-left:0;}
+#lblstate {margin-left:130px;}
+#lblzip {margin-left:10px;}
+#lblphone {margin-left:0;}
+#lblnickname {margin-left:0;}
+#lblbirthday {margin-left:100px;}
+
+textarea{
+	width:680px;
+	height:50px;
+	overflow: auto;
+}
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+a:hover, a:active, a:focus{
+	background: white;
+	color: #2D6400;
+}

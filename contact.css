@@ -1,0 +1,89 @@
+/**************************** page content ***************************/
+
+#infocontainer{
+	max-width: 720px;
+	/* http://www.svendtofte.com/code/max_width_in_ie/ */
+	width: expression(document.body.clientWidth > 720? "720px": "auto");
+	margin: 0px auto;
+	padding: 20px 0px;
+	text-align: left;
+}	
+
+.name{
+	width: 25%;
+	float: left;
+	clear: none;
+}
+
+.phone{
+	width: 25%;
+	float: left;
+	clear: none;
+}
+
+
+
+
+/**************************** table styles ***************************/
+
+table{
+  width:760px;
+	border-collapse:collapse;
+}
+
+tr{
+	padding: 25px;	
+	font-weight: bold;
+}
+
+td{
+	text-align: left;
+	border-bottom: 25px solid #8BDD3A;
+}
+
+.one{
+	width: 180px;
+	background: #4BB400;
+	padding: 4px;
+	padding-left: 10px;
+}
+
+.two{
+	width: auto;
+	background: #4BB400;
+	color: black;
+	padding: 4px;
+}
+
+.three{
+	width: 158px;
+	background: #4BB400;
+	color: black;
+	padding: 4px;
+}
+
+
+
+
+
+/************************** links ****************************/
+
+a:link, a:visited{
+	color: white;
+	/*color: #0000EE;*/
+	text-decoration: none;
+	display: block;
+}
+
+table a:hover{
+	background: white;
+	color: #2D6400;
+}
+
+#sort a{
+	display: inline;
+}
+
+#sort a:hover{
+	color: black;
+}
