@@ -28,8 +28,10 @@ function sql_scrub_noquote($query)
   return $query;
 }
 
-$db = mysql_connect('perceptionist-db.3amproductions.net','perceptionist','perceptionist');
-if(!$db){
+$dbparts = parse_url(getenv('JAWSDB_MARIA_URL'));
+if($db = mysql_connect($dbparts['host'], $dbparts['user'], $dbparts['pass'])) {
+  mysql_select_db(ltrim($dbparts['path'],'/'), $db);
+} else {
   $to = "";
   $subject = "MySQL Error - DB Connection";
   $msg = "MySQL DB Connection Failed:\n";
@@ -38,5 +40,4 @@ if(!$db){
   //mail($to,$subject,$msg,$headers);
   die;
 }
-mysql_select_db('perceptionist',$db);
 ?>
