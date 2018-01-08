@@ -53,7 +53,7 @@ function CD_Init() {
 			var id	= pref + i;
 			objH	= document.getElementById(id);
 
-			if (objH && (objH.firstChild.nodeType) != 'undefined') {
+			if (objH && objH.firstChild && objH.firstChild.nodeType != 'undefined') {
 				var s	= objH.firstChild.nodeValue;
 				var dt = new Date(s);
 				if (!isNaN(dt)) {
