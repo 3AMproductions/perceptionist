@@ -55,7 +55,7 @@ function CD_Init() {
 
 			if (objH && (objH.firstChild.nodeType) != 'undefined') {
 				var s	= objH.firstChild.nodeValue;
-				var dt = new Date(s.substr(0,4),s.substr(4,2)-1,s.substr(6,2),s.substr(8,2),s.substr(10,2),s.substr(12,2),00);
+				var dt = new Date(s);
 				if (!isNaN(dt)) {
 					CD_OBJS[id] = objH; // Store global reference to countdown element object
 					CD_T(id, dt.valueOf());
