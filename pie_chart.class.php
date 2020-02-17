@@ -42,7 +42,7 @@ class Pie_Chart
     $ChartCenterX = $ChartDiameter/2 + 10;
     $ChartCenterY = $ChartDiameter/2 + 10;
     //set the content type
-    header("Content-type: image/svg-xml");
+    header("Content-type: image/svg+xml");
     //mark this as XML
     print('<?xml version="1.0" encoding="iso-8859-1"?>' . "\n");
     //Point to SVG DTD
