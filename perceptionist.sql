@@ -161,7 +161,7 @@ INSERT INTO `customer_bio` (`customer_id`, `nickname`, `birthday`, `hobbies`, `m
 (2, 'SnoopDogg', '1971-10-20', NULL, 'Calvin uses language that is sometimes innappropriate and some words he uses he made up himself.'),
 (3, 'Carlito', '1961-03-14', 'Carlos watches soccer on tv all the time.', 'Carlos prefers speaking in Spanish if it\'s ever available.'),
 (4, 'Phil', '1981-05-11', 'Avid reader of the Wall Street Journal.', NULL),
-(5, 'Bobby', NULL, 'Computers and web programming with php and MySQL', 'Likes to chat.'),
+(5, 'Bobby', NULL, 'Computers and web programming with php and mysql', 'Likes to chat.'),
 (6, 'TR', NULL, 'Listening to music all the time', 'Huge rock fan. Favorite movie is \"School of Rock\".'),
 (7, 'Dr. Kant', NULL, 'Coming up with philisophical theories.', 'Be careful with words like \"should\" and \"ought\".'),
 (8, 'Stuart', '1999-04-07', 'Coming up with great book dealing with government\'s role.', 'Avid Reader.'),

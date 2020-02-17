@@ -49,7 +49,7 @@ This page is used to log a question a customer asked about our client company wh
   		<label for="existing">Existing:</label>
   		<select id="existing" name="customer_id">
     		<optgroup label="Customer Name">
-      		<?php $result = mysql_query("SELECT * FROM customer",$db); while($row = @mysql_fetch_assoc($result)) echo '<option>'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
+      		<?php $result = mysqli_query($db, "SELECT * FROM customer"); while($row = @mysqli_fetch_assoc($result)) echo '<option>'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
     		</optgroup>
     		<optgroup label="Other">
       		<option value="new">New Customer</option>
