@@ -51,7 +51,7 @@ This page is used to log a complaint given by customer. Choose the Customer and 
   		<label for="existing">Existing:</label>
   		<select id="existing" name="customer_id">
     		<optgroup label="Customer Name">
-      		<?php $result = mysql_query("SELECT * FROM customer",$db); while($row = @mysql_fetch_assoc($result)) echo '<option value="'.$row['customer_id'].'">'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
+      		<?php $result = mysqli_query($db, "SELECT * FROM customer"); while($row = @mysqli_fetch_assoc($result)) echo '<option value="'.$row['customer_id'].'">'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
 				</optgroup>
     		<optgroup label="Other">
       		<option value="new">New Customer</option>
@@ -74,7 +74,7 @@ This page is used to log a complaint given by customer. Choose the Customer and 
   		<label for="employee_name">Employee Name:</label>
   		<select id="employee_name" name="employee_id">
     		<optgroup label="Employee Name">
-      		<?php $result = mysql_query("SELECT * FROM employee",$db); while($row = @mysql_fetch_assoc($result)) echo '<option value="'.$row['employee_id'].'">'.$row['employee_fname'].' '.$row['employee_lname'].'</option>'."\n"; ?>
+      		<?php $result = mysqli_query($db, "SELECT * FROM employee"); while($row = @mysqli_fetch_assoc($result)) echo '<option value="'.$row['employee_id'].'">'.$row['employee_fname'].' '.$row['employee_lname'].'</option>'."\n"; ?>
     		</optgroup>
     		<optgroup label="Other">
       		<option value="all">To All</option>

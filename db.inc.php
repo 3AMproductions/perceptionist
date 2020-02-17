@@ -14,7 +14,7 @@ function sql_scrub($query)
   // Stripslashes
   if (get_magic_quotes_gpc()) $query = stripslashes($query);
   // Quote if not integer
-  if (!is_numeric($query)) $query = "'" . mysql_real_escape_string($query) . "'";
+  if (!is_numeric($query)) $query = "'" . mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $query) . "'";
   return $query;
 }
 
@@ -24,18 +24,18 @@ function sql_scrub_noquote($query)
   // Stripslashes
   if (get_magic_quotes_gpc()) $query = stripslashes($query);
   // Quote if not integer
-  if (!is_numeric($query)) $query = mysql_real_escape_string($query);
+  if (!is_numeric($query)) $query = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $query);
   return $query;
 }
 
 $dbparts = parse_url(getenv('JAWSDB_MARIA_URL'));
-if($db = mysql_connect($dbparts['host'], $dbparts['user'], $dbparts['pass'])) {
-  mysql_select_db(ltrim($dbparts['path'],'/'), $db);
+if($db = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dbparts['host'],  $dbparts['user'],  $dbparts['pass']))) {
+  mysqli_select_db( $db, constant('ltrim($dbparts['path'],'/')'));
 } else {
   $to = "";
-  $subject = "MySQL Error - DB Connection";
-  $msg = "MySQL DB Connection Failed:\n";
-  $msq .= "\n".mysql_errno()."\t".mysql_error();
+  $subject = "mysql Error - DB Connection";
+  $msg = "mysql DB Connection Failed:\n";
+  $msq .= "\n".mysqli_errno($GLOBALS["___mysqli_ston"])."\t".mysqli_error($GLOBALS["___mysqli_ston"]);
   $headers = "From: webmaster@example.com\r\nReply-To: webmaster@example.com\r\nX-Mailer: PHP/".phpversion();
   //mail($to,$subject,$msg,$headers);
   die;

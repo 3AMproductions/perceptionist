@@ -8,11 +8,11 @@ if(!is_null($submit)){
 	elseif(strlen($phone)==10) $phone = '('.substr($phone,0,3).') '.substr($phone,3,3).'-'.substr($phone,6);
 	else $phone = "(000) 000-0000";
 	$sql = "INSERT INTO customer VALUES (NULL,".sql_scrub($_POST['fname']).",".sql_scrub($_POST['mname']).",".sql_scrub($_POST['lname']).",".sql_scrub($_POST['street']).",".sql_scrub($_POST['city']).",".sql_scrub($_POST['state']).",".sql_scrub($_POST['zip']).",".sql_scrub($phone).")";
-	$result = mysql_query($sql,$db);
+	$result = mysqli_query($db, $sql);
 	if($result){
-		$id = mysql_insert_id($db);
+		$id = ((is_null($___mysqli_res = mysqli_insert_id($db))) ? false : $___mysqli_res);
 		$sql = "INSERT INTO customer_bio VALUES (".$id.",".sql_scrub($_POST['nickname']).",".sql_scrub($_POST['birthday']).",".sql_scrub($_POST['hobbies']).",".sql_scrub($_POST['misc']).")";
-		$result = mysql_query($sql,$db);
+		$result = mysqli_query($db, $sql);
 		if($result){
 		//both inserts successfull
 			header('location:customer.php?cid='.$id);

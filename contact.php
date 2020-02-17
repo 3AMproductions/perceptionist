@@ -48,8 +48,8 @@ This page contains a listing of all customers on record for your company. Clicki
 <?php
 if(!is_null($coid)) $sql = 'SELECT * FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) LEFT JOIN call ON (call.customer_id = customer.customer_id) WHERE company_id = '.$coid.' ORDER BY customer.fname';
 else $sql = 'SELECT * FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) ORDER BY customer.fname';
-$result = mysql_query($sql,$db);
-while($bio = @mysql_fetch_assoc($result))
+$result = mysqli_query($db, $sql);
+while($bio = @mysqli_fetch_assoc($result))
 {
   echo '	    <tr>'."\n";
 	echo '  	    <td class="one"><a href="customer.php?cid='.$bio['customer_id'].'">'.$bio['fname'].' '.$bio['lname'].'</a></td>'."\n";
