@@ -29,9 +29,9 @@ function sql_scrub_noquote($query)
 }
 
 $dbparts = parse_url(getenv('JAWSDB_MARIA_URL'));
-if($db = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dbparts['host'],  $dbparts['user'],  $dbparts['pass']))) {
-  mysqli_select_db( $db, constant('ltrim($dbparts['path'],'/')'));
-} else {
+$db = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dbparts['host'],  $dbparts['user'],  $dbparts['pass'], ltrim($dbparts['path'],'/')));
+
+if (!$db) {
   $to = "";
   $subject = "mysql Error - DB Connection";
   $msg = "mysql DB Connection Failed:\n";
