@@ -60,50 +60,61 @@ This page contains information concerning one particular customer. It includes h
 <?php
 if(!is_null($cid))
 {
-  $sql = 'SELECT *,date_format(customer_bio.birthday, \'%M %D, %Y\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = '.$cid.')';
-  $result = mysqli_query($db, $sql);
-  if($bio = @mysqli_fetch_assoc($result))
+  $sql = 'SELECT *,date_format(customer_bio.birthday, \'%M %D, %Y\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = ?)';
+  $result = pg_query_params($db, $sql, [$cid]);
+  if($bio = pg_fetch_assoc($result))
   {
     if(!is_null($call_id))
     {
-      $company = (!is_null($coid)? " AND call.company_id = $coid" : "");
-      $sql = 'SELECT * FROM call LEFT JOIN flow ON (call.call_id = flow.call_id) LEFT JOIN employee ON (flow.employee_id = employee.employee_id) LEFT JOIN customer ON (customer.customer_id = call.customer_id) WHERE call.call_id = '.$call_id.$company.' AND (call.resolved != 1) ORDER BY call.call_time';
-      $result2 = mysqli_query($db, $sql);
-      if($call = @mysqli_fetch_assoc($result2))
+      $sql = 'SELECT * FROM call LEFT JOIN flow ON (call.call_id = flow.call_id) LEFT JOIN employee ON (flow.employee_id = employee.employee_id) LEFT JOIN customer ON (customer.customer_id = call.customer_id) WHERE call.call_id = ? AND (call.resolved != 1)';
+      $params = [$call_id];
+      if(!is_null($coid)){
+        $sql .= " AND call.company_id = ?";
+        array_push($params, $coid);
+      }
+      $sql.= ' ORDER BY call.call_time';
+      $result2 = pg_query_params($db, $sql, $params);
+      if($call = pg_fetch_assoc($result2))
         echo '<div id="time">Time since this call: -<span id="countdown1">'.$call['call_time'].'</span></div><!--time-->'."\n";
     }
     echo '<div id="infocontainer">'."\n";
     echo '<h3>'.$bio['fname'].' '.$bio['lname'].'</h3>'."\n";
     echo '<address id="phone">'.$bio['phone'].'</address>'."\n";
     echo '<address>'.$bio['address'].'<br />'.$bio['city'].', '.$bio['state'].' '.$bio['zip'].'</address>'."\n";
-    if(!is_null($call_id) and @mysqli_data_seek($result2, 0))
+    if(!is_null($call_id) and pg_result_seek($result2, 0))
     {
-      if($call = @mysqli_fetch_assoc($result2)){
+      if($call = pg_fetch_assoc($result2)){
         echo '<dl id="request">'."\n";
         echo '  <dt>Request:</dt><dd>'.wordwrap($call['request'], 75, " ", 1).'</dd>'."\n";
         echo '  <dt>Perceptionist Call Flow:</dt>'."\n";
-        echo '	<dd><a id="resolve_call" href="resolve.php?call_id='.$call['call_id'].'&amp;refer='.$PHP_SELF.'?cid='.$cid.'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$call['fname'].' '.$call['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve2.gif" alt="Resolve Call" onmouseover="this.src=\'images/resolve2hover.gif\'" onmouseout="this.src=\'images/resolve2.gif\'" /></a>';
+        echo '  <dd><a id="resolve_call" href="resolve.php?call_id='.$call['call_id'].'&amp;refer='.$PHP_SELF.'?cid='.$cid.'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$call['fname'].' '.$call['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve2.gif" alt="Resolve Call" onmouseover="this.src=\'images/resolve2hover.gif\'" onmouseout="this.src=\'images/resolve2.gif\'" /></a>';
         echo $bio['fname'].' (Customer) --- Perceptionist --- <a href="perception.php?eid='.$call['employee_id'].'">'.$call['employee_fname'].'</a>';
-        while($call = @mysqli_fetch_assoc($result2)) echo ' --- <a href="perception.php?eid='.$call['employee_id'].'">'.$call['employee_fname'].'</a>';
+        while($call = pg_fetch_assoc($result2)) echo ' --- <a href="perception.php?eid='.$call['employee_id'].'">'.$call['employee_fname'].'</a>';
         echo "</dd>\n</dl>\n";
       }
     }
-    if(!is_null($coid)) $company = ' AND (call.company_id = '.$coid.')';
-    else $company = ''; 
+
+    $sql = 'SELECT * FROM call WHERE call.resolved != 1 AND customer_id = ?';
+    $params = [$cid];
+
+    if(!is_null($coid)){
+      $sql .= ' AND (call.company_id = ?)';
+      array_push($params, $coid);
+    }
     if(!is_null($call_id)){
-      $sql = 'SELECT * FROM call WHERE call.resolved != 1 AND customer_id = '.$cid.' AND call_id != '.$call_id.$company;
+      $sql .= ' AND call_id != ?';
+      array_push($params, $call_id);
       $counter = 2;}
     else{
-      $sql = 'SELECT * FROM call WHERE call.resolved != 1 AND customer_id = '.$cid.$company;
-      $counter = 1;}			
-      $result2 = mysqli_query($db, $sql);
-    if($call = @mysqli_fetch_assoc($result2)){
+      $counter = 1;}
+    $result2 = pg_query_params($db, $sql, $params);
+    if($call = pg_fetch_assoc($result2)){
       echo '<div id="tablewrapper">'."\n";
       echo '<table id="calls">'."\n";
-      echo '<thead><tr><th colspan="4">! '.$bio['fname'].' has '.mysqli_num_rows($result2).' other unresolved call'.(mysqli_num_rows($result2)>1? 's' : '').'.</th></tr></thead>';
+      echo '<thead><tr><th colspan="4">! '.$bio['fname'].' has '.pg_num_rows($result2).' other unresolved call'.(pg_num_rows($result2)>1? 's' : '').'.</th></tr></thead>';
       echo '<tbody>'."\n";
-      @mysqli_data_seek($result2, 0);
-      while($call = @mysqli_fetch_assoc($result2)){
+      pg_result_seek($result2, 0);
+      while($call = pg_fetch_assoc($result2)){
         // trim request
         $request = $call['request'];
         if(strlen($request) > 50){
@@ -114,10 +125,10 @@ if(!is_null($cid))
             $pos = strrpos ($request,' ');
             if($pos !== false) $request = substr($request,0,$pos) . '...';
             else $request .= '...';
-          } 
+          }
         }
         echo "<tr>\n";
-        echo ' <td class="one"><a href="'.$PHP_SELF.'?cid='.$call['customer_id'].'&amp;call_id='.$call['call_id'].'">'.$bio['fname'].'</a></td>'."\n";
+        echo ' <td class="one"><a href="?cid='.$call['customer_id'].'&amp;call_id='.$call['call_id'].'">'.$bio['fname'].'</a></td>'."\n";
         echo ' <td class="two">Request: '.$request.'</td>'."\n";
         echo ' <td class="three">&nbsp; -<span id="countdown'.$counter.'">'.$call['call_time'].'</span></td>'."\n";
         //echo ' <td class="four"><a href="resolve.php?call_id='.$call['call_id'].'&amp;refer='.$PHP_SELF.'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$bio['fname'].' '.$bio['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve.gif" alt="Resolve Call" /></a></td>';
