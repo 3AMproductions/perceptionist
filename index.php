@@ -65,15 +65,10 @@ if(!is_null($coid)) $company = '(call.company_id = '.$coid.') AND ';
 else $company = ''; 
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,TIME_FORMAT(call.call_time,\'%D:%T\') AS time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
-$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN `call` ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id)';// WHERE '.$company.'(call.resolved != 1) '.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
-$result = mysqli_query($db, $sql);
-$pgresult = pg_query_params($pg, $sql);
+$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id)';// WHERE '.$company.'(call.resolved != 1) '.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
+$result = pg_query_params($db, $sql, []);
 $counter = 1;
 while ($row = pg_fetch_assoc($result))
-{
-  echo $row;
-}
-while ($row = @mysqli_fetch_assoc($result))
 {
   // trim request
   $request = $row['request'];
@@ -104,18 +99,17 @@ while ($row = @mysqli_fetch_assoc($result))
 </div><!--tablewrapper-->
 <div id="sort">Sort By:
 <?php
-if(!is_null($coid)) $company = ' WHERE employee.company_id = '.sql_scrub($coid);
-else $company = ''; 
 $sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee'.$company;
-$result = mysqli_query($db, $sql);
-while($row = @mysqli_fetch_assoc($result)){
+if(!is_null($coid)) $result = pg_query_params($db, $sql.' WHERE employee.company_id = ?', [$company]);
+else $result = pg_query_params($db, $sql, []);
+while($row = pg_fetch_assoc($result)){
   echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
 }
 echo '<a href="?eid=all">SHOW ALL</a>'."\n";
 // TEMP BELOW ***********************************
 echo '<div>Choose Company: ';
-$result = mysqli_query($db, 'SELECT company_id FROM company');
-while($row = @mysqli_fetch_assoc($result)){echo '<a href="?coid='.$row['company_id'].'">CO.'.$row['company_id'].'</a> | ';}
+$result = pg_query_params($db, 'SELECT company_id FROM company', []);
+while($row = pg_fetch_assoc($result)){echo '<a href="?coid='.$row['company_id'].'">CO.'.$row['company_id'].'</a> | ';}
 echo '<a href="?coid=all">SHOW ALL</a></div>';
 // END TEMP *************************************
 ?>
