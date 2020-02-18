@@ -1,11 +1,11 @@
 <?php
 function strip_to_num($str)
 {
- 	if(strlen($str)>0)
-	{
-	  if(is_numeric($str{0})) return $str{0} . strip_to_num(substr($str,1));
-		else return strip_to_num(substr($str,1));
-	}
+  if(strlen($str)>0)
+  {
+    if(is_numeric($str[0])) return $str[0] . strip_to_num(substr($str,1));
+    else return strip_to_num(substr($str,1));
+  }
 }
 
 function sql_scrub($query)
