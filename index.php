@@ -100,7 +100,7 @@ while ($row = pg_fetch_assoc($result))
 <div id="sort">Sort By:
 <?php
 $sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee'.$company;
-if(!is_null($coid)) $result = pg_query_params($db, $sql.' WHERE employee.company_id = ?', [$company]);
+if(!is_null($coid)) $result = pg_query_params($db, $sql.' WHERE employee.company_id = $1', [$company]);
 else $result = pg_query_params($db, $sql, []);
 while($row = pg_fetch_assoc($result)){
   echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";

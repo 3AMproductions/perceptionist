@@ -60,16 +60,16 @@ This page contains information concerning one particular customer. It includes h
 <?php
 if(!is_null($cid))
 {
-  $sql = 'SELECT *,date_format(customer_bio.birthday, \'%M %D, %Y\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = ?)';
+  $sql = 'SELECT *,date_format(customer_bio.birthday, \'%M %D, %Y\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = $1)';
   $result = pg_query_params($db, $sql, [$cid]);
   if($bio = pg_fetch_assoc($result))
   {
     if(!is_null($call_id))
     {
-      $sql = 'SELECT * FROM call LEFT JOIN flow ON (call.call_id = flow.call_id) LEFT JOIN employee ON (flow.employee_id = employee.employee_id) LEFT JOIN customer ON (customer.customer_id = call.customer_id) WHERE call.call_id = ? AND (call.resolved != 1)';
+      $sql = 'SELECT * FROM call LEFT JOIN flow ON (call.call_id = flow.call_id) LEFT JOIN employee ON (flow.employee_id = employee.employee_id) LEFT JOIN customer ON (customer.customer_id = call.customer_id) WHERE call.call_id = $1 AND (call.resolved != 1)';
       $params = [$call_id];
       if(!is_null($coid)){
-        $sql .= " AND call.company_id = ?";
+        $sql .= " AND call.company_id = $2";
         array_push($params, $coid);
       }
       $sql.= ' ORDER BY call.call_time';
@@ -94,16 +94,16 @@ if(!is_null($cid))
       }
     }
 
-    $sql = 'SELECT * FROM call WHERE call.resolved != 1 AND customer_id = ?';
+    $sql = 'SELECT * FROM call WHERE call.resolved != 1 AND customer_id = $1';
     $params = [$cid];
 
     if(!is_null($coid)){
-      $sql .= ' AND (call.company_id = ?)';
       array_push($params, $coid);
+      $sql .= ' AND call.company_id = $'.sizeof($params);
     }
     if(!is_null($call_id)){
-      $sql .= ' AND call_id != ?';
       array_push($params, $call_id);
+      $sql .= ' AND call_id != $'.sizeof($params);
       $counter = 2;}
     else{
       $counter = 1;}
