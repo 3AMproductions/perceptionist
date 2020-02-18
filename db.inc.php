@@ -30,6 +30,16 @@ function sql_scrub_noquote($query)
 
 $dbparts = parse_url(getenv('JAWSDB_MARIA_URL'));
 $db = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dbparts['host'],  $dbparts['user'],  $dbparts['pass'], ltrim($dbparts['path'],'/')));
+$pg = pg_connect(getenv('DATABASE_URL'));
+
+if (!$pg) {
+  $to = "";
+  $subject = "Error - DB Connection";
+  $msg = "DB Connection Failed:\n";
+  $headers = "From: webmaster@example.com\r\nReply-To: webmaster@example.com\r\nX-Mailer: PHP/".phpversion();
+  //mail($to,$subject,$msg,$headers);
+  die;
+}
 
 if (!$db) {
   $to = "";

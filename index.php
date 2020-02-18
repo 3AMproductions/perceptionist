@@ -67,7 +67,12 @@ else $company = '';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 $sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN `call` ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id)';// WHERE '.$company.'(call.resolved != 1) '.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 $result = mysqli_query($db, $sql);
+$pgresult = pg_query_params($pg, $sql);
 $counter = 1;
+while ($row = pg_fetch_assoc($result))
+{
+  echo $row;
+}
 while ($row = @mysqli_fetch_assoc($result))
 {
   // trim request
