@@ -6,16 +6,16 @@ if ( stristr($_SERVER["HTTP_ACCEPT"],"application/xhtml+xml") || $_GET['xml']=="
 	echo '<?xml version="1.0" encoding="utf-8"?>'."\n";}
 else {header("Content-type: text/html");}
 
-if(!is_null($_REQUEST['eid']) and is_numeric($_REQUEST['eid'])){
+if(isset($_REQUEST['eid']) and is_numeric($_REQUEST['eid'])){
   $eid = $_REQUEST['eid'];
 	$_SESSION['eid'] = $_REQUEST['eid'];}
-elseif(!is_null($_SESSION['eid']) and is_numeric($_SESSION['eid']) and $_REQUEST['eid'] != "all") $eid = $_SESSION['eid'];
+elseif(isset($_SESSION['eid']) and is_numeric($_SESSION['eid']) and $_REQUEST['eid'] != "all") $eid = $_SESSION['eid'];
 else $eid = NULL;
 
-if(!is_null($_REQUEST['coid']) and is_numeric($_REQUEST['coid'])){
+if(isset($_REQUEST['coid']) and is_numeric($_REQUEST['coid'])){
   $coid = $_REQUEST['coid'];
 	$_SESSION['coid'] = $_REQUEST['coid'];}
-elseif(!is_null($_SESSION['coid']) and is_numeric($_SESSION['coid']) and $_REQUEST['coid'] != "all") $coid = $_SESSION['coid'];
+elseif(isset($_SESSION['coid']) and is_numeric($_SESSION['coid']) and $_REQUEST['coid'] != "all") $coid = $_SESSION['coid'];
 else $coid = NULL;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
