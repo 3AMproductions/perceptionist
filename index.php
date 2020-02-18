@@ -89,7 +89,7 @@ echo "<tr>\n";
 echo ' <td class="one"><a href="customer.php?cid='.$row['customer_id'].'&amp;call_id='.$row['call_id'].'">'.$row['fname'].' '.$row['lname'].'</a></td>'."\n";
 echo ' <td class="two">Request: '.$request.'</td>'."\n";
 echo ' <td class="three">&nbsp; -<span id="countdown'.$counter.'">'.$row['call_time'].'</span></td>'."\n";
-echo ' <td class="four"><a href="resolve.php?call_id='.$row['call_id'].'&amp;refer='.$PHP_SELF.'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$row['fname'].' '.$row['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve.gif" alt="Resolve Call" /></a></td>';
+echo ' <td class="four"><a href="resolve.php?call_id='.$row['call_id'].'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$row['fname'].' '.$row['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve.gif" alt="Resolve Call" /></a></td>';
 echo '</tr>'."\n";
 $counter++;
 }
@@ -104,14 +104,14 @@ else $company = '';
 $sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee'.$company;
 $result = mysqli_query($db, $sql);
 while($row = @mysqli_fetch_assoc($result)){
-	echo '<a href="'.$PHP_SELF.'?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
+	echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
 }
-echo '<a href="'.$PHP_SELF.'?eid=all">SHOW ALL</a>'."\n";
+echo '<a href="?eid=all">SHOW ALL</a>'."\n";
 // TEMP BELOW ***********************************
 echo '<div>Choose Company: ';
 $result = mysqli_query($db, 'SELECT company_id FROM company');
-while($row = @mysqli_fetch_assoc($result)){echo '<a href="'.$PHP_SELF.'?coid='.$row['company_id'].'">CO.'.$row['company_id'].'</a> | ';}
-echo '<a href="'.$PHP_SELF.'?coid=all">SHOW ALL</a></div>';
+while($row = @mysqli_fetch_assoc($result)){echo '<a href="?coid='.$row['company_id'].'">CO.'.$row['company_id'].'</a> | ';}
+echo '<a href="?coid=all">SHOW ALL</a></div>';
 // END TEMP *************************************
 ?>
 </div><!--sort-->
