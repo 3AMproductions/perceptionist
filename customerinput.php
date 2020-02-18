@@ -2,7 +2,7 @@
 include('db.inc.php');
 session_start();
 
-if(!is_null($submit)){
+if(isset($submit)){
   $phone = strip_to_num($_POST['phone']);
   if(strlen($phone)==7) $phone = substr($phone,0,3).'-'.substr($phone,3);
   elseif(strlen($phone)==10) $phone = '('.substr($phone,0,3).') '.substr($phone,3,3).'-'.substr($phone,6);

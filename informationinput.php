@@ -2,7 +2,7 @@
 include('db.inc.php');
 session_start();
 
-if(!is_null($submit)){
+if(isset($submit)){
   print_r($_POST);
   exit;
 }
