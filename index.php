@@ -3,18 +3,18 @@ include('db.inc.php');
 session_start();
 if ( stristr($_SERVER["HTTP_ACCEPT"],"application/xhtml+xml") || $_GET['xml']=="true") {
   header("Content-type: application/xhtml+xml");
-	echo '<?xml version="1.0" encoding="utf-8"?>'."\n";}
+  echo '<?xml version="1.0" encoding="utf-8"?>'."\n";}
 else {header("Content-type: text/html");}
 
 if(isset($_REQUEST['eid']) and is_numeric($_REQUEST['eid'])){
   $eid = $_REQUEST['eid'];
-	$_SESSION['eid'] = $_REQUEST['eid'];}
+  $_SESSION['eid'] = $_REQUEST['eid'];}
 elseif(isset($_SESSION['eid']) and is_numeric($_SESSION['eid']) and $_REQUEST['eid'] != "all") $eid = $_SESSION['eid'];
 else $eid = NULL;
 
 if(isset($_REQUEST['coid']) and is_numeric($_REQUEST['coid'])){
   $coid = $_REQUEST['coid'];
-	$_SESSION['coid'] = $_REQUEST['coid'];}
+  $_SESSION['coid'] = $_REQUEST['coid'];}
 elseif(isset($_SESSION['coid']) and is_numeric($_SESSION['coid']) and $_REQUEST['coid'] != "all") $coid = $_SESSION['coid'];
 else $coid = NULL;
 ?>
@@ -46,11 +46,11 @@ This page contains information regarding those customers which were not able to 
 </div><!--navfill-->
 
 <ul id="nav">
-	<li><a href="index.php" accesskey="h"><em>h</em>ome</a></li>
-	<li><a href="report.php#complaints" accesskey="c"><em>c</em>omplaints</a></li>
-	<li><a href="report.php#unresolved" accesskey="u"><em>u</em>nresolved calls</a></li>
-	<li><a href="contact.php" accesskey="o">c<em>o</em>ntact list</a></li>
-	<li><a href="report.php" accesskey="r"><em>r</em>eport</a></li>
+  <li><a href="index.php" accesskey="h"><em>h</em>ome</a></li>
+  <li><a href="report.php#complaints" accesskey="c"><em>c</em>omplaints</a></li>
+  <li><a href="report.php#unresolved" accesskey="u"><em>u</em>nresolved calls</a></li>
+  <li><a href="contact.php" accesskey="o">c<em>o</em>ntact list</a></li>
+  <li><a href="report.php" accesskey="r"><em>r</em>eport</a></li>
 </ul> <!--nav-->
 
 <br style="clear:both;" />
@@ -70,28 +70,28 @@ $result = mysqli_query($db, $sql);
 $counter = 1;
 while ($row = @mysqli_fetch_assoc($result))
 {
-// trim request
-$request = $row['request'];
-if(strlen($request) > 50){
-  $request = substr($request,0,50);
-	$pos = strrpos ($request,'.');
-	if($pos !== false) $request = substr($request,0,$pos+1 );
-	else {
-		$pos = strrpos ($request,' ');
-		if($pos !== false) $request = substr($request,0,$pos) . '...';
-		else $request .= '...';
-	} 
-}
-// format call time
-$time = $row['call_time']; $d = substr($time,6,2); $h = substr($time,8,2); $m = substr($time,10,2); $s = substr($time,12,2); $time = "$d:$h:$m:$s";
+  // trim request
+  $request = $row['request'];
+  if(strlen($request) > 50){
+    $request = substr($request,0,50);
+    $pos = strrpos ($request,'.');
+    if($pos !== false) $request = substr($request,0,$pos+1 );
+    else {
+      $pos = strrpos ($request,' ');
+      if($pos !== false) $request = substr($request,0,$pos) . '...';
+      else $request .= '...';
+    } 
+  }
+  // format call time
+  $time = $row['call_time']; $d = substr($time,6,2); $h = substr($time,8,2); $m = substr($time,10,2); $s = substr($time,12,2); $time = "$d:$h:$m:$s";
 
-echo "<tr>\n";
-echo ' <td class="one"><a href="customer.php?cid='.$row['customer_id'].'&amp;call_id='.$row['call_id'].'">'.$row['fname'].' '.$row['lname'].'</a></td>'."\n";
-echo ' <td class="two">Request: '.$request.'</td>'."\n";
-echo ' <td class="three">&nbsp; -<span id="countdown'.$counter.'">'.$row['call_time'].'</span></td>'."\n";
-echo ' <td class="four"><a href="resolve.php?call_id='.$row['call_id'].'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$row['fname'].' '.$row['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve.gif" alt="Resolve Call" /></a></td>';
-echo '</tr>'."\n";
-$counter++;
+  echo "<tr>\n";
+  echo ' <td class="one"><a href="customer.php?cid='.$row['customer_id'].'&amp;call_id='.$row['call_id'].'">'.$row['fname'].' '.$row['lname'].'</a></td>'."\n";
+  echo ' <td class="two">Request: '.$request.'</td>'."\n";
+  echo ' <td class="three">&nbsp; -<span id="countdown'.$counter.'">'.$row['call_time'].'</span></td>'."\n";
+  echo ' <td class="four"><a href="resolve.php?call_id='.$row['call_id'].'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$row['fname'].' '.$row['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve.gif" alt="Resolve Call" /></a></td>';
+  echo '</tr>'."\n";
+  $counter++;
 }
 ?>
 </tbody>
@@ -104,7 +104,7 @@ else $company = '';
 $sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee'.$company;
 $result = mysqli_query($db, $sql);
 while($row = @mysqli_fetch_assoc($result)){
-	echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
+  echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
 }
 echo '<a href="?eid=all">SHOW ALL</a>'."\n";
 // TEMP BELOW ***********************************
@@ -117,9 +117,9 @@ echo '<a href="?coid=all">SHOW ALL</a></div>';
 </div><!--sort-->
 <a href="http://student.cob.ohio-state.edu/velasquez_13">
   <span id="innerfooter">
-	  <span class="ifootertop">Does your compnay have a web presence?</span>
-		<span class="ifooterbottom">Click here to find out why you need one and how 3AM can help you get there...</span>
-	</span><!--innerfooter-->
+    <span class="ifootertop">Does your compnay have a web presence?</span>
+    <span class="ifooterbottom">Click here to find out why you need one and how 3AM can help you get there...</span>
+  </span><!--innerfooter-->
 </a>
 </div><!-- main -->
 </div><!-- container -->
