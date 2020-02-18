@@ -60,7 +60,7 @@ This page contains information concerning one particular customer. It includes h
 <?php
 if(!is_null($cid))
 {
-  $sql = 'SELECT *,date_format(customer_bio.birthday, \'%M %D, %Y\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = $1)';
+  $sql = 'SELECT *,to_char(customer_bio.birthday, \'FMMonth DDth, YYYY\') AS bdate FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) WHERE (customer.customer_id = $1)';
   $result = pg_query_params($db, $sql, [$cid]);
   if($bio = pg_fetch_assoc($result))
   {
