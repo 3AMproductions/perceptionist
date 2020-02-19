@@ -46,16 +46,21 @@ This page contains a listing of all customers on record for your company. Clicki
   <table>
     <tbody>
 <?php
-if(!is_null($coid)) $sql = 'SELECT * FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) LEFT JOIN call ON (call.customer_id = customer.customer_id) WHERE company_id = '.$coid.' ORDER BY customer.fname';
-else $sql = 'SELECT * FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id) ORDER BY customer.fname';
-$result = mysqli_query($db, $sql);
-while($bio = @mysqli_fetch_assoc($result))
+$sql = 'SELECT * FROM customer LEFT JOIN customer_bio ON (customer.customer_id = customer_bio.customer_id)';
+$params = [];
+if(!is_null($coid)){
+  $sql .= ' LEFT JOIN call ON (call.customer_id = customer.customer_id) WHERE company_id = $1';
+  array_push($params, $coid);
+}
+$sql.=' ORDER BY customer.fname';
+$result = pg_query_params($db, $sql, $params);
+while($bio = pg_fetch_assoc($result))
 {
-  echo '	    <tr>'."\n";
-  echo '  	    <td class="one"><a href="customer.php?cid='.$bio['customer_id'].'">'.$bio['fname'].' '.$bio['lname'].'</a></td>'."\n";
-  echo '				<td class="two">'.$bio['address'].'</td>'."\n";
-  echo '				<td class="three">'.$bio['phone'].'</td>'."\n";
-  echo'			</tr>'."\n";
+  echo '      <tr>'."\n";
+  echo '        <td class="one"><a href="customer.php?cid='.$bio['customer_id'].'">'.$bio['fname'].' '.$bio['lname'].'</a></td>'."\n";
+  echo '        <td class="two">'.$bio['address'].'</td>'."\n";
+  echo '        <td class="three">'.$bio['phone'].'</td>'."\n";
+  echo '      </tr>'."\n";
 }
 ?>
     </tbody>
