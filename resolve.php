@@ -5,10 +5,15 @@ require_once('db.inc.php');
 $to = "webmaster@example.com";
 $headers = "From: webmaster@example.com\r\nReply-To: webmaster@example.com\r\nX-Mailer: PHP/".phpversion();
 
-if(is_numeric($_REQUEST['call_id'])){
-  $sql = 'UPDATE call SET resolved = 1 WHERE call_id = '.sql_scrub($_REQUEST['call_id']);
-  $result = mysqli_query($db, $sql);
-  if(mysqli_affected_rows($db)==1){// update successful
+if(isset($_REQUEST['call_id']) and is_numeric($_REQUEST['call_id'])){
+  $result = pg_update($db, 'call', ['resolved' => 1], ['call_id' => $_REQUEST['call_id']]);
+
+  /*
+   pg_update doesn't return a result resource for us to check affected rows,
+   but since all we'd do is send an email (which we don't actually want to do)
+   just exit
+
+  if($result){// update successful
     header('location:'.$_REQUEST['refer']); exit;}
   elseif(mysqli_affected_rows($db)==0){// update affected nothing
     $subject = "mysql Error - Call Resolution";
@@ -32,12 +37,14 @@ if(is_numeric($_REQUEST['call_id'])){
     $msg = "The following SQL query failed:\n\t{$sql}\n".mysqli_errno($GLOBALS["___mysqli_ston"])."\t".mysqli_error($GLOBALS["___mysqli_ston"]);
     //mail($to,$subject,$msg,$headers);
     header('location:'.$_REQUEST['refer']); die;}
+   */
 }
-else{// invalid call_id
-  $subject = "Call Resolution Error";
-  $msg = "Call resolution failed.\nCause:\tcall_id (".$_REQUEST['call_id'].") not numeric.";
-  //mail($to,$subject,$msg,$headers);
-  header('location:'.$_REQUEST['refer']);
-  die;
-}
+/* else{// invalid call_id */
+/*   //$subject = "Call Resolution Error"; */
+/*   //$msg = "Call resolution failed.\nCause:\tcall_id (".$_REQUEST['call_id'].") not numeric."; */
+/*   //mail($to,$subject,$msg,$headers); */
+/*   header('location:'.$_REQUEST['refer']); */
+/*   die; */
+/* } */
+header('location:'.$_SERVER['HTTP_REFERER']);
 ?>
