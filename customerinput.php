@@ -2,25 +2,38 @@
 include('db.inc.php');
 session_start();
 
-if(isset($submit)){
+if(isset($_POST['submit'])){
   $phone = strip_to_num($_POST['phone']);
   if(strlen($phone)==7) $phone = substr($phone,0,3).'-'.substr($phone,3);
   elseif(strlen($phone)==10) $phone = '('.substr($phone,0,3).') '.substr($phone,3,3).'-'.substr($phone,6);
   else $phone = "(000) 000-0000";
-  $sql = "INSERT INTO customer VALUES (NULL,".sql_scrub($_POST['fname']).",".sql_scrub($_POST['mname']).",".sql_scrub($_POST['lname']).",".sql_scrub($_POST['street']).",".sql_scrub($_POST['city']).",".sql_scrub($_POST['state']).",".sql_scrub($_POST['zip']).",".sql_scrub($phone).")";
-  $result = mysqli_query($db, $sql);
+  $result = pg_insert($db, 'customer', [
+    'fname' => $_POST['fname'],
+    'mname' => $_POST['mname'],
+    'lname' => $_POST['lname'],
+    'address' => $_POST['street'],
+    'city' => $_POST['city'],
+    'state' => $_POST['state'],
+    'zip' => $_POST['zip'],
+    'phone' => $phone
+  ]);
   if($result){
-    $id = ((is_null($___mysqli_res = mysqli_insert_id($db))) ? false : $___mysqli_res);
-    $sql = "INSERT INTO customer_bio VALUES (".$id.",".sql_scrub($_POST['nickname']).",".sql_scrub($_POST['birthday']).",".sql_scrub($_POST['hobbies']).",".sql_scrub($_POST['misc']).")";
-    $result = mysqli_query($db, $sql);
+    $id = pg_fetch_result(pg_query($db, 'SELECT LASTVAL()'), 0,0);
+    $result = pg_insert($db, 'customer_bio', [
+      'customer_id' => $id,
+      'nickname' => $_POST['nickname'],
+      'birthday' => $_POST['birthday'],
+      'hobbies' => $_POST['hobbies'],
+      'misc' => $_POST['misc']
+    ]);
     if($result){
       //both inserts successfull
       header('location:customer.php?cid='.$id);
       exit;
     }
   }
-  echo $sql;
   // else either insert failed
+  print_r($_POST);
   exit;
 }
 else{
@@ -61,7 +74,7 @@ else{
 This page is used to add customers to the database.
 </div><!--navfill-->
 
-<form id="infocontainer" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+<form id="infocontainer" method="post">
   <h3 style="clear:both;">Personal Information</h3>
   <fieldset id="name">
     <legend>Name:</legend>
