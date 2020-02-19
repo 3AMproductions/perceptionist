@@ -43,13 +43,13 @@ else{
 This page is used to log a question a customer asked about our client company which we were not able to answer. Choose the customer from the drop down menu or if they are not in the menu, type their name. Choose the question type from its drop down menu. Then type the question.
 </div><!--navfill-->
 
-<form id="infocontainer" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+<form id="infocontainer" method="post">
   <fieldset id="customer"><legend>Customer:</legend>
     <div class="row">
       <label for="existing">Existing:</label>
       <select id="existing" name="customer_id">
         <optgroup label="Customer Name">
-          <?php $result = mysqli_query($db, "SELECT * FROM customer"); while($row = @mysqli_fetch_assoc($result)) echo '<option>'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
+          <?php $result = pg_query_params($db, "SELECT * FROM customer", []); while($row = pg_fetch_assoc($result)) echo '<option>'.$row['fname'].' '.$row['lname'].'</option>'."\n"; ?>
         </optgroup>
         <optgroup label="Other">
           <option value="new">New Customer</option>

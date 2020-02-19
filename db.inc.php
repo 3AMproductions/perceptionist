@@ -28,14 +28,12 @@ function sql_scrub_noquote($query)
   return $query;
 }
 
-$dbparts = parse_url(getenv('JAWSDB_MARIA_URL'));
-$db = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dbparts['host'],  $dbparts['user'],  $dbparts['pass'], ltrim($dbparts['path'],'/')));
+$db = pg_connect(getenv('DATABASE_URL'));
 
 if (!$db) {
   $to = "";
-  $subject = "mysql Error - DB Connection";
-  $msg = "mysql DB Connection Failed:\n";
-  $msq .= "\n".mysqli_errno($GLOBALS["___mysqli_ston"])."\t".mysqli_error($GLOBALS["___mysqli_ston"]);
+  $subject = "Error - DB Connection";
+  $msg = "DB Connection Failed:\n";
   $headers = "From: webmaster@example.com\r\nReply-To: webmaster@example.com\r\nX-Mailer: PHP/".phpversion();
   //mail($to,$subject,$msg,$headers);
   die;
