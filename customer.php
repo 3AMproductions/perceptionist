@@ -87,7 +87,7 @@ if(!is_null($cid))
         echo '<dl id="request">'."\n";
         echo '  <dt>Request:</dt><dd>'.wordwrap($call['request'], 75, " ", 1).'</dd>'."\n";
         echo '  <dt>Perceptionist Call Flow:</dt>'."\n";
-        echo '  <dd><a id="resolve_call" href="resolve.php?call_id='.$call['call_id'].'&amp;refer='.$PHP_SELF.'?cid='.$cid.'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$call['fname'].' '.$call['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve2.gif" alt="Resolve Call" onmouseover="this.src=\'images/resolve2hover.gif\'" onmouseout="this.src=\'images/resolve2.gif\'" /></a>';
+        echo '  <dd><a id="resolve_call" href="resolve.php?call_id='.$call['call_id'].'" title="Click to resolve this call." onclick="return confirm(\'Click \\\'OK\\\' if '.$call['fname'].' '.$call['lname'].'\\\'s call has been resolved.\');"><img src="images/resolve2.gif" alt="Resolve Call" onmouseover="this.src=\'images/resolve2hover.gif\'" onmouseout="this.src=\'images/resolve2.gif\'" /></a>';
         echo $bio['fname'].' (Customer) --- Perceptionist --- <a href="perception.php?eid='.$call['employee_id'].'">'.$call['employee_fname'].'</a>';
         while($call = pg_fetch_assoc($result2)) echo ' --- <a href="perception.php?eid='.$call['employee_id'].'">'.$call['employee_fname'].'</a>';
         echo "</dd>\n</dl>\n";
@@ -142,9 +142,9 @@ if(!is_null($cid))
     echo '<h4>Bio Info</h4>'."\n";
     echo '<dl id="bio">'."\n";
     echo '  <dt>Nickname:</dt><dd>"'.$bio['nickname'].'"</dd>'."\n";
-    echo '	<dt>Birthday:</dt><dd>'.$bio['bdate'].'</dd>'."\n";
-    echo '	<dt>Hobbies:</dt><dd>'.$bio['hobbies'].'</dd>'."\n";
-    echo '	<dt>Miscellaneous:</dt><dd>'.$bio['misc'].'</dd>'."\n";
+    echo '  <dt>Birthday:</dt><dd>'.$bio['bdate'].'</dd>'."\n";
+    echo '  <dt>Hobbies:</dt><dd>'.$bio['hobbies'].'</dd>'."\n";
+    echo '  <dt>Miscellaneous:</dt><dd>'.$bio['misc'].'</dd>'."\n";
     echo '</dl><!--bio-->'."\n";
     echo '</div><!--infocontainer-->'."\n";
   }
