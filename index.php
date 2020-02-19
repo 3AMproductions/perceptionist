@@ -9,13 +9,13 @@ else {header("Content-type: text/html");}
 if(isset($_REQUEST['eid']) and is_numeric($_REQUEST['eid'])){
   $eid = $_REQUEST['eid'];
   $_SESSION['eid'] = $_REQUEST['eid'];}
-elseif(isset($_SESSION['eid']) and is_numeric($_SESSION['eid']) and $_REQUEST['eid'] != "all") $eid = $_SESSION['eid'];
+elseif(isset($_SESSION['eid']) and is_numeric($_SESSION['eid']) and !(isset($_REQUEST['eid']) and $_REQUEST['eid'] == "all")) $eid = $_SESSION['eid'];
 else $eid = NULL;
 
 if(isset($_REQUEST['coid']) and is_numeric($_REQUEST['coid'])){
   $coid = $_REQUEST['coid'];
   $_SESSION['coid'] = $_REQUEST['coid'];}
-elseif(isset($_SESSION['coid']) and is_numeric($_SESSION['coid']) and $_REQUEST['coid'] != "all") $coid = $_SESSION['coid'];
+elseif(isset($_SESSION['coid']) and is_numeric($_SESSION['coid']) and !(isset($_REQUEST['coid']) and $_REQUEST['coid'] == "all")) $coid = $_SESSION['coid'];
 else $coid = NULL;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -62,7 +62,7 @@ This page contains information regarding those customers which were not able to 
 if(!is_null($eid)) $sort = ' AND (flow.employee_id = '.sql_scrub($eid).')';
 else $sort = '';
 if(!is_null($coid)) $company = '(call.company_id = '.$coid.') AND ';
-else $company = ''; 
+else $company = '';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,TIME_FORMAT(call.call_time,\'%D:%T\') AS time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 $sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id)';// WHERE '.$company.'(call.resolved != 1) '.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
@@ -80,7 +80,7 @@ while ($row = pg_fetch_assoc($result))
       $pos = strrpos ($request,' ');
       if($pos !== false) $request = substr($request,0,$pos) . '...';
       else $request .= '...';
-    } 
+    }
   }
   // format call time
   $time = $row['call_time']; $d = substr($time,6,2); $h = substr($time,8,2); $m = substr($time,10,2); $s = substr($time,12,2); $time = "$d:$h:$m:$s";
