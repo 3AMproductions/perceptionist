@@ -59,14 +59,21 @@ This page contains information regarding those customers which were not able to 
 <table id="calls">
 <tbody>
 <?php
-if(!is_null($eid)) $sort = ' AND (flow.employee_id = '.sql_scrub($eid).')';
-else $sort = '';
-if(!is_null($coid)) $company = '(call.company_id = '.$coid.') AND ';
-else $company = '';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,TIME_FORMAT(call.call_time,\'%D:%T\') AS time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
 //$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE '.$company.'(call.resolved != 1) AND (TO_DAYS(NOW()) - TO_DAYS(call.call_time) <= 1)'.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
-$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM customer LEFT JOIN call ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id)';// WHERE '.$company.'(call.resolved != 1) '.$sort.' GROUP BY call.call_id ORDER BY call.call_time';
-$result = pg_query_params($db, $sql, []);
+$sql = 'SELECT DISTINCT call.call_id,flow.employee_id,customer.fname,customer.lname,call.request,customer.customer_id,call.call_time FROM call LEFT JOIN customer ON (customer.customer_id = call.customer_id) LEFT JOIN flow ON (call.call_id = flow.call_id) WHERE true';
+$params = [];
+
+if(!is_null($eid)){
+  array_push($params, $eid);
+  $sql.=' AND employee_id = $'.sizeof($params);
+}
+if(!is_null($coid)){
+  array_push($params, $coid);
+  $sql.=' AND company_id = $'.sizeof($params);
+}
+$sql.=' ORDER By call_time';
+$result = pg_query_params($db, $sql, $params);
 $counter = 1;
 while ($row = pg_fetch_assoc($result))
 {
@@ -99,9 +106,14 @@ while ($row = pg_fetch_assoc($result))
 </div><!--tablewrapper-->
 <div id="sort">Sort By:
 <?php
-$sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee';
-if(!is_null($coid)) $result = pg_query_params($db, $sql.' WHERE employee.company_id = $1', [$company]);
-else $result = pg_query_params($db, $sql, []);
+$sql = 'SELECT employee.employee_id,employee.employee_fname FROM employee WHERE true';
+$params = [];
+
+if(!is_null($coid)) {
+  array_push($params, $coid);
+  $sql.=' AND company_id = $'.sizeof($params);
+}
+$result = pg_query_params($db, $sql, $params);
 while($row = pg_fetch_assoc($result)){
   echo '<a href="?eid='.$row['employee_id'].'">'.$row['employee_fname'].'</a> | '."\n";
 }
